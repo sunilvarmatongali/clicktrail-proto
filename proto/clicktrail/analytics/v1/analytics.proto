@@ -1,0 +1,36 @@
+// Contract between the gateway (client) and the analytics service (server).
+// Rule: only add new fields or new RPCs. Never reuse or renumber an existing
+// field, otherwise older clients break. A breaking change needs a new package
+// version (v2).
+syntax = "proto3";
+
+package clicktrail.analytics.v1;
+
+option go_package = "github.com/sunilvarmatongali/clicktrail-proto/gen/clicktrail/analytics/v1;analyticsv1";
+
+// AnalyticsService exposes click statistics that the analytics service
+// builds from the click events published by the URL service.
+service AnalyticsService {
+  // GetLinkClickCount returns how many times one short link was opened.
+  rpc GetLinkClickCount(GetLinkClickCountRequest) returns (GetLinkClickCountResponse);
+
+  // GetTotalClickCount returns the number of clicks across all links.
+  // The gateway only allows admins to call this.
+  rpc GetTotalClickCount(GetTotalClickCountRequest) returns (GetTotalClickCountResponse);
+}
+
+message GetLinkClickCountRequest {
+  // Short code of the link, for example "aB3dE9".
+  string short_code = 1;
+}
+
+message GetLinkClickCountResponse {
+  string short_code = 1;
+  int64 click_count = 2;
+}
+
+message GetTotalClickCountRequest {}
+
+message GetTotalClickCountResponse {
+  int64 total_click_count = 1;
+}
