@@ -123,6 +123,111 @@ func (x *GetLinkClickCountResponse) GetClickCount() int64 {
 	return 0
 }
 
+type GetOwnedLinkClickCountRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	ShortCode string                 `protobuf:"bytes,1,opt,name=short_code,json=shortCode,proto3" json:"short_code,omitempty"`
+	// ID of the user who asks (from the verified token). Must be greater than zero.
+	OwnerUserId   uint64 `protobuf:"varint,2,opt,name=owner_user_id,json=ownerUserId,proto3" json:"owner_user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOwnedLinkClickCountRequest) Reset() {
+	*x = GetOwnedLinkClickCountRequest{}
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOwnedLinkClickCountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOwnedLinkClickCountRequest) ProtoMessage() {}
+
+func (x *GetOwnedLinkClickCountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOwnedLinkClickCountRequest.ProtoReflect.Descriptor instead.
+func (*GetOwnedLinkClickCountRequest) Descriptor() ([]byte, []int) {
+	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetOwnedLinkClickCountRequest) GetShortCode() string {
+	if x != nil {
+		return x.ShortCode
+	}
+	return ""
+}
+
+func (x *GetOwnedLinkClickCountRequest) GetOwnerUserId() uint64 {
+	if x != nil {
+		return x.OwnerUserId
+	}
+	return 0
+}
+
+type GetOwnedLinkClickCountResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ShortCode     string                 `protobuf:"bytes,1,opt,name=short_code,json=shortCode,proto3" json:"short_code,omitempty"`
+	ClickCount    int64                  `protobuf:"varint,2,opt,name=click_count,json=clickCount,proto3" json:"click_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOwnedLinkClickCountResponse) Reset() {
+	*x = GetOwnedLinkClickCountResponse{}
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOwnedLinkClickCountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOwnedLinkClickCountResponse) ProtoMessage() {}
+
+func (x *GetOwnedLinkClickCountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOwnedLinkClickCountResponse.ProtoReflect.Descriptor instead.
+func (*GetOwnedLinkClickCountResponse) Descriptor() ([]byte, []int) {
+	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetOwnedLinkClickCountResponse) GetShortCode() string {
+	if x != nil {
+		return x.ShortCode
+	}
+	return ""
+}
+
+func (x *GetOwnedLinkClickCountResponse) GetClickCount() int64 {
+	if x != nil {
+		return x.ClickCount
+	}
+	return 0
+}
+
 type GetTotalClickCountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -131,7 +236,7 @@ type GetTotalClickCountRequest struct {
 
 func (x *GetTotalClickCountRequest) Reset() {
 	*x = GetTotalClickCountRequest{}
-	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[2]
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -143,7 +248,7 @@ func (x *GetTotalClickCountRequest) String() string {
 func (*GetTotalClickCountRequest) ProtoMessage() {}
 
 func (x *GetTotalClickCountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[2]
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -156,7 +261,7 @@ func (x *GetTotalClickCountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTotalClickCountRequest.ProtoReflect.Descriptor instead.
 func (*GetTotalClickCountRequest) Descriptor() ([]byte, []int) {
-	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{2}
+	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{4}
 }
 
 type GetTotalClickCountResponse struct {
@@ -168,7 +273,7 @@ type GetTotalClickCountResponse struct {
 
 func (x *GetTotalClickCountResponse) Reset() {
 	*x = GetTotalClickCountResponse{}
-	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[3]
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -180,7 +285,7 @@ func (x *GetTotalClickCountResponse) String() string {
 func (*GetTotalClickCountResponse) ProtoMessage() {}
 
 func (x *GetTotalClickCountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[3]
+	mi := &file_clicktrail_analytics_v1_analytics_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -193,7 +298,7 @@ func (x *GetTotalClickCountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTotalClickCountResponse.ProtoReflect.Descriptor instead.
 func (*GetTotalClickCountResponse) Descriptor() ([]byte, []int) {
-	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{3}
+	return file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetTotalClickCountResponse) GetTotalClickCount() int64 {
@@ -215,12 +320,22 @@ const file_clicktrail_analytics_v1_analytics_proto_rawDesc = "" +
 	"\n" +
 	"short_code\x18\x01 \x01(\tR\tshortCode\x12\x1f\n" +
 	"\vclick_count\x18\x02 \x01(\x03R\n" +
+	"clickCount\"b\n" +
+	"\x1dGetOwnedLinkClickCountRequest\x12\x1d\n" +
+	"\n" +
+	"short_code\x18\x01 \x01(\tR\tshortCode\x12\"\n" +
+	"\rowner_user_id\x18\x02 \x01(\x04R\vownerUserId\"`\n" +
+	"\x1eGetOwnedLinkClickCountResponse\x12\x1d\n" +
+	"\n" +
+	"short_code\x18\x01 \x01(\tR\tshortCode\x12\x1f\n" +
+	"\vclick_count\x18\x02 \x01(\x03R\n" +
 	"clickCount\"\x1b\n" +
 	"\x19GetTotalClickCountRequest\"H\n" +
 	"\x1aGetTotalClickCountResponse\x12*\n" +
-	"\x11total_click_count\x18\x01 \x01(\x03R\x0ftotalClickCount2\x8d\x02\n" +
+	"\x11total_click_count\x18\x01 \x01(\x03R\x0ftotalClickCount2\x99\x03\n" +
 	"\x10AnalyticsService\x12z\n" +
-	"\x11GetLinkClickCount\x121.clicktrail.analytics.v1.GetLinkClickCountRequest\x1a2.clicktrail.analytics.v1.GetLinkClickCountResponse\x12}\n" +
+	"\x11GetLinkClickCount\x121.clicktrail.analytics.v1.GetLinkClickCountRequest\x1a2.clicktrail.analytics.v1.GetLinkClickCountResponse\x12\x89\x01\n" +
+	"\x16GetOwnedLinkClickCount\x126.clicktrail.analytics.v1.GetOwnedLinkClickCountRequest\x1a7.clicktrail.analytics.v1.GetOwnedLinkClickCountResponse\x12}\n" +
 	"\x12GetTotalClickCount\x122.clicktrail.analytics.v1.GetTotalClickCountRequest\x1a3.clicktrail.analytics.v1.GetTotalClickCountResponseBWZUgithub.com/sunilvarmatongali/clicktrail-proto/gen/clicktrail/analytics/v1;analyticsv1b\x06proto3"
 
 var (
@@ -235,20 +350,24 @@ func file_clicktrail_analytics_v1_analytics_proto_rawDescGZIP() []byte {
 	return file_clicktrail_analytics_v1_analytics_proto_rawDescData
 }
 
-var file_clicktrail_analytics_v1_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_clicktrail_analytics_v1_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_clicktrail_analytics_v1_analytics_proto_goTypes = []any{
-	(*GetLinkClickCountRequest)(nil),   // 0: clicktrail.analytics.v1.GetLinkClickCountRequest
-	(*GetLinkClickCountResponse)(nil),  // 1: clicktrail.analytics.v1.GetLinkClickCountResponse
-	(*GetTotalClickCountRequest)(nil),  // 2: clicktrail.analytics.v1.GetTotalClickCountRequest
-	(*GetTotalClickCountResponse)(nil), // 3: clicktrail.analytics.v1.GetTotalClickCountResponse
+	(*GetLinkClickCountRequest)(nil),       // 0: clicktrail.analytics.v1.GetLinkClickCountRequest
+	(*GetLinkClickCountResponse)(nil),      // 1: clicktrail.analytics.v1.GetLinkClickCountResponse
+	(*GetOwnedLinkClickCountRequest)(nil),  // 2: clicktrail.analytics.v1.GetOwnedLinkClickCountRequest
+	(*GetOwnedLinkClickCountResponse)(nil), // 3: clicktrail.analytics.v1.GetOwnedLinkClickCountResponse
+	(*GetTotalClickCountRequest)(nil),      // 4: clicktrail.analytics.v1.GetTotalClickCountRequest
+	(*GetTotalClickCountResponse)(nil),     // 5: clicktrail.analytics.v1.GetTotalClickCountResponse
 }
 var file_clicktrail_analytics_v1_analytics_proto_depIdxs = []int32{
 	0, // 0: clicktrail.analytics.v1.AnalyticsService.GetLinkClickCount:input_type -> clicktrail.analytics.v1.GetLinkClickCountRequest
-	2, // 1: clicktrail.analytics.v1.AnalyticsService.GetTotalClickCount:input_type -> clicktrail.analytics.v1.GetTotalClickCountRequest
-	1, // 2: clicktrail.analytics.v1.AnalyticsService.GetLinkClickCount:output_type -> clicktrail.analytics.v1.GetLinkClickCountResponse
-	3, // 3: clicktrail.analytics.v1.AnalyticsService.GetTotalClickCount:output_type -> clicktrail.analytics.v1.GetTotalClickCountResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	2, // 1: clicktrail.analytics.v1.AnalyticsService.GetOwnedLinkClickCount:input_type -> clicktrail.analytics.v1.GetOwnedLinkClickCountRequest
+	4, // 2: clicktrail.analytics.v1.AnalyticsService.GetTotalClickCount:input_type -> clicktrail.analytics.v1.GetTotalClickCountRequest
+	1, // 3: clicktrail.analytics.v1.AnalyticsService.GetLinkClickCount:output_type -> clicktrail.analytics.v1.GetLinkClickCountResponse
+	3, // 4: clicktrail.analytics.v1.AnalyticsService.GetOwnedLinkClickCount:output_type -> clicktrail.analytics.v1.GetOwnedLinkClickCountResponse
+	5, // 5: clicktrail.analytics.v1.AnalyticsService.GetTotalClickCount:output_type -> clicktrail.analytics.v1.GetTotalClickCountResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -265,7 +384,7 @@ func file_clicktrail_analytics_v1_analytics_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_clicktrail_analytics_v1_analytics_proto_rawDesc), len(file_clicktrail_analytics_v1_analytics_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

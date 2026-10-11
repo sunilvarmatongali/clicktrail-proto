@@ -14,6 +14,12 @@ service AnalyticsService {
   // GetLinkClickCount returns how many times one short link was opened.
   rpc GetLinkClickCount(GetLinkClickCountRequest) returns (GetLinkClickCountResponse);
 
+  // GetOwnedLinkClickCount returns the clicks of one link, but only if the given user owns it.
+  // It answers NOT_FOUND both when the link is unknown and when it belongs to somebody else, so callers cannot probe
+  // which short codes exist. The analytics service knows the owners from the LinkCreated events it consumes, which makes this
+  // call independent of the URL service. A link that was created a moment ago may be unknown for a few seconds (eventual consistency).
+  rpc GetOwnedLinkClickCount(GetOwnedLinkClickCountRequest) returns (GetOwnedLinkClickCountResponse);
+
   // GetTotalClickCount returns the number of clicks across all links.
   // The gateway only allows admins to call this.
   rpc GetTotalClickCount(GetTotalClickCountRequest) returns (GetTotalClickCountResponse);
@@ -25,6 +31,17 @@ message GetLinkClickCountRequest {
 }
 
 message GetLinkClickCountResponse {
+  string short_code = 1;
+  int64 click_count = 2;
+}
+
+message GetOwnedLinkClickCountRequest {
+  string short_code = 1;
+  // ID of the user who asks (from the verified token). Must be greater than zero.
+  uint64 owner_user_id = 2;
+}
+
+message GetOwnedLinkClickCountResponse {
   string short_code = 1;
   int64 click_count = 2;
 }

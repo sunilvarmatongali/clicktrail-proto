@@ -24,8 +24,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AnalyticsService_GetLinkClickCount_FullMethodName  = "/clicktrail.analytics.v1.AnalyticsService/GetLinkClickCount"
-	AnalyticsService_GetTotalClickCount_FullMethodName = "/clicktrail.analytics.v1.AnalyticsService/GetTotalClickCount"
+	AnalyticsService_GetLinkClickCount_FullMethodName      = "/clicktrail.analytics.v1.AnalyticsService/GetLinkClickCount"
+	AnalyticsService_GetOwnedLinkClickCount_FullMethodName = "/clicktrail.analytics.v1.AnalyticsService/GetOwnedLinkClickCount"
+	AnalyticsService_GetTotalClickCount_FullMethodName     = "/clicktrail.analytics.v1.AnalyticsService/GetTotalClickCount"
 )
 
 // AnalyticsServiceClient is the client API for AnalyticsService service.
@@ -37,6 +38,11 @@ const (
 type AnalyticsServiceClient interface {
 	// GetLinkClickCount returns how many times one short link was opened.
 	GetLinkClickCount(ctx context.Context, in *GetLinkClickCountRequest, opts ...grpc.CallOption) (*GetLinkClickCountResponse, error)
+	// GetOwnedLinkClickCount returns the clicks of one link, but only if the given user owns it.
+	// It answers NOT_FOUND both when the link is unknown and when it belongs to somebody else, so callers cannot probe
+	// which short codes exist. The analytics service knows the owners from the LinkCreated events it consumes, which makes this
+	// call independent of the URL service. A link that was created a moment ago may be unknown for a few seconds (eventual consistency).
+	GetOwnedLinkClickCount(ctx context.Context, in *GetOwnedLinkClickCountRequest, opts ...grpc.CallOption) (*GetOwnedLinkClickCountResponse, error)
 	// GetTotalClickCount returns the number of clicks across all links.
 	// The gateway only allows admins to call this.
 	GetTotalClickCount(ctx context.Context, in *GetTotalClickCountRequest, opts ...grpc.CallOption) (*GetTotalClickCountResponse, error)
@@ -54,6 +60,16 @@ func (c *analyticsServiceClient) GetLinkClickCount(ctx context.Context, in *GetL
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetLinkClickCountResponse)
 	err := c.cc.Invoke(ctx, AnalyticsService_GetLinkClickCount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *analyticsServiceClient) GetOwnedLinkClickCount(ctx context.Context, in *GetOwnedLinkClickCountRequest, opts ...grpc.CallOption) (*GetOwnedLinkClickCountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOwnedLinkClickCountResponse)
+	err := c.cc.Invoke(ctx, AnalyticsService_GetOwnedLinkClickCount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,6 +95,11 @@ func (c *analyticsServiceClient) GetTotalClickCount(ctx context.Context, in *Get
 type AnalyticsServiceServer interface {
 	// GetLinkClickCount returns how many times one short link was opened.
 	GetLinkClickCount(context.Context, *GetLinkClickCountRequest) (*GetLinkClickCountResponse, error)
+	// GetOwnedLinkClickCount returns the clicks of one link, but only if the given user owns it.
+	// It answers NOT_FOUND both when the link is unknown and when it belongs to somebody else, so callers cannot probe
+	// which short codes exist. The analytics service knows the owners from the LinkCreated events it consumes, which makes this
+	// call independent of the URL service. A link that was created a moment ago may be unknown for a few seconds (eventual consistency).
+	GetOwnedLinkClickCount(context.Context, *GetOwnedLinkClickCountRequest) (*GetOwnedLinkClickCountResponse, error)
 	// GetTotalClickCount returns the number of clicks across all links.
 	// The gateway only allows admins to call this.
 	GetTotalClickCount(context.Context, *GetTotalClickCountRequest) (*GetTotalClickCountResponse, error)
@@ -94,6 +115,9 @@ type UnimplementedAnalyticsServiceServer struct{}
 
 func (UnimplementedAnalyticsServiceServer) GetLinkClickCount(context.Context, *GetLinkClickCountRequest) (*GetLinkClickCountResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetLinkClickCount not implemented")
+}
+func (UnimplementedAnalyticsServiceServer) GetOwnedLinkClickCount(context.Context, *GetOwnedLinkClickCountRequest) (*GetOwnedLinkClickCountResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetOwnedLinkClickCount not implemented")
 }
 func (UnimplementedAnalyticsServiceServer) GetTotalClickCount(context.Context, *GetTotalClickCountRequest) (*GetTotalClickCountResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetTotalClickCount not implemented")
@@ -137,6 +161,24 @@ func _AnalyticsService_GetLinkClickCount_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AnalyticsService_GetOwnedLinkClickCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOwnedLinkClickCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AnalyticsServiceServer).GetOwnedLinkClickCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AnalyticsService_GetOwnedLinkClickCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AnalyticsServiceServer).GetOwnedLinkClickCount(ctx, req.(*GetOwnedLinkClickCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AnalyticsService_GetTotalClickCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTotalClickCountRequest)
 	if err := dec(in); err != nil {
@@ -165,6 +207,10 @@ var AnalyticsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLinkClickCount",
 			Handler:    _AnalyticsService_GetLinkClickCount_Handler,
+		},
+		{
+			MethodName: "GetOwnedLinkClickCount",
+			Handler:    _AnalyticsService_GetOwnedLinkClickCount_Handler,
 		},
 		{
 			MethodName: "GetTotalClickCount",
